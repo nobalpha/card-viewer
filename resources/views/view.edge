@@ -1,0 +1,36 @@
+@layout('layouts/master') 
+@section('content')
+<!-- Can't add a line comment before (also in the same line, probably a parser error!) master layout!? It destroys the whole styling...-->
+{{--  
+TODO: Model Title
+TODO: Model Window Save & Discard Changes
+TODO: Model CRUD
+TODO: Translation  
+TODO: Planning to have three roles: Content Creator, Translator and Validator => They, all will see whole cards, but Content Creator will have `Add Card`; Translator `Add Translation` and Validator `Validate` options...
+--}}
+<script src="/js/view.js"></script>
+<style>
+  .flag-icon {
+  filter:contrast(200%);  filter:brightness(115%);
+  width: 1.5rem; height: 1.5rem; border-radius: 0.4rem
+}
+</style>
+@if(err)~
+<div class="container is-centered">
+<article class="message is-danger is-small m-6 has-text-centered">
+    <div class="is-small message-body">
+      {{err_msg}}
+    </div>
+  </article>
+</div>
+@else
+
+@each((datum, index) in data)
+<div class="container mt-4">
+    @include("partials/card")
+</div>
+@include("partials/modal")
+  @endeach
+
+@endif~
+@endsection

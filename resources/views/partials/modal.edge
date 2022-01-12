@@ -1,0 +1,91 @@
+<div class="container mt-1 is-fullheight">
+  <div id="modal-{{index}}" class="modal is-fullheight">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Card Editor</p> {{-- Card name  --}}
+        <button class="delete delete-modal" aria-label="close" data-target="#modal-{{index}}"></button>
+      </header>
+      <form action="/edit" method="POST">
+      <section class="modal-card-body">
+        <div class="field is-horizontal mb-5">
+          <div class="field-label is-normal">
+            <label class="label">Card ID</label>
+          </div>
+          <div class="field-body">
+            <div class="field has-text-centered">
+              <div class="control is-expanded">
+              <input class="title input is-normal" name="card-id" value="{{datum.id}}" readonly/> <!-- FIXME: There'll definetely a content flaw  by which you can modify another card... Wait, aren't we giving access to people who will have already the permission to modify all?! lol-->
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Image</label>
+          </div>
+          <div class="field-body">
+            <div class="field has-text-centered">
+              <img width="300px" height="225px" class="is-rounded mb-4" src="{{datum.image}}" alt="Placeholder image">
+              <div class="file is-primary has-name is-centered mb-4">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="image">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label"> Upload image! </span>
+                  </span>
+                  <span class="file-name"> Get filename via JS! </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        @each((value, key) in datum.langs)
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <i class="flag-icon flag-icon-{{key}}"></i>
+          </div>
+          <div class="field-body">
+            <div class="field translation">
+              <div class="control is-expanded">
+                <input class="input is-normal" name="{{key}}-data" value="{{value.data}}" type="text" placeholder="Écrivez la traduction..."> {{-- Translate placeholder by language  --}}
+              </div>
+            </div>
+            <div class="field validation mr-0">
+              <div class="control is-expanded has-text-centered">
+                <label class="checkbox is-centered">
+                  <!-- How to center this!!!-->
+                  <input type="hidden" value="{{value.validated ? "yes" : "no"}}" name="{{key}}-validated">
+                  <input type="checkbox" {{"checked".repeat(value.validated)}}  > Validez ! <i class="fas fa-check-double"></i>
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control has-text-centered">
+                <label class="is-centered">
+                  <!-- How to center this!!!-->
+                  <button class="button delete-entry" style="color: red;" type="menu">
+                    <i class="far fa-times-circle"></i>
+                  </button>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endeach
+        <div class="modal-adder is-expanded mt-2 pt-2">
+          <button class="button is-fullwidth is-primary" type="reset">
+            <i class="fas fa-plus-circle"></i> &nbsp; Add new entry! </button>
+          <!--Interface                  -->
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" type="submit">Save changes</button> {{-- Translate placeholder by language  --}}
+        <button class="button delete-modal" type="reset" data-target="#modal-{{index}}">Cancel</button> {{-- Translate placeholder by language  --}}
+      </footer>
+    </form>
+    </div>
+  </div>
+</div>
